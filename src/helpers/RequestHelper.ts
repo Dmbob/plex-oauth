@@ -24,8 +24,14 @@ export class RequestHelper {
 
         return new Promise((resolve, reject) => {
             let req = https.request(url, params, (response) => {
+                let responseStr = "";
+
                 response.on("data", (data) => {
-                    let jsonData = JSON.parse(data);
+                    responseStr += data;
+                });
+
+                response.on("end", () => {
+                    let jsonData = JSON.parse(responseStr);
 
                     if(jsonData) {
                         resolve(jsonData);
@@ -64,8 +70,14 @@ export class RequestHelper {
 
         return new Promise((resolve, reject) => {
             let req = https.request(url, params, (response) => {
+                let responseStr = "";
+
                 response.on("data", (data) => {
-                    let jsonData = JSON.parse(data);
+                    responseStr += data;
+                });
+
+                response.on("end", () => {
+                    let jsonData = JSON.parse(responseStr);
                     if(jsonData) {
                         resolve(jsonData);
                     }else {
