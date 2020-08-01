@@ -1,13 +1,13 @@
 {
   "name": "plex-oauth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Small library to handle simple OAuth with Plex",
   "repository": {
     "url": "https://github.com/Dmbob/plex-oauth"
   },
   "main": "build/src/index.js",
   "scripts": {
-    "prepare": "npm run build && npm test",
+    "prepublishOnly": "npm run build && npm test",
     "test": "jasmine-ts --config=jasmine.json",
     "build": "tsc"
   },
