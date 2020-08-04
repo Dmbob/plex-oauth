@@ -21,7 +21,7 @@ export class PlexOauth {
     public requestHostedLoginURL(): Promise<[string, number]> {
         return this.authPin.getPin(this.clientInfo).then(codeResponse => {
             return [
-                `${LinkHelper.PLEX_AUTH_BASE_PATH}#?code=${codeResponse.code}&context[device][product]=${this.clientInfo.product}&context[device][device]=${this.clientInfo.device}&clientID=${codeResponse.clientIdentifier}`, 
+                `${LinkHelper.PLEX_AUTH_BASE_PATH}#?code=${codeResponse.code}&context[device][product]=${this.clientInfo.product}&context[device][device]=${this.clientInfo.device}&clientID=${codeResponse.clientIdentifier}&forwardUrl=${this.clientInfo.forwardUrl}`, 
                 codeResponse.id
             ] as [string, number];
         }).catch(err => {
@@ -39,8 +39,13 @@ export class PlexOauth {
      * 
      * @returns {Promise<string | null>} The authtoken if found or null
      */
-    public checkForAuthToken(pinId: number, requestDelay: number, maxRetries: number): Promise<string | null> {
+    public checkForAuthToken(pinId: number, requestDelay?: number, maxRetries?: number): Promise<string | null> {
         if(!pinId) { throw new Error ("Pin Id is not set - Unable to poll for auth token without id"); }
+
+        // If 'requestDelay' or 'maxRetries' is not set, then we will treat this
+        // as a single request, so we only request the auth token from the api once
+        requestDelay = requestDelay || 1000;
+        maxRetries = maxRetries || 0;
 
         return this.authPin.pollForAuthToken(this.clientInfo, pinId, requestDelay, maxRetries).then(authToken => {
             return authToken;
