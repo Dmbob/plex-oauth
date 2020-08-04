@@ -36,14 +36,13 @@ export class AuthPin {
         }
 
         return RequestHelper.get(`${LinkHelper.PLEX_PIN_BASE_PATH}/pins/${pinId}`, {...LinkHelper.getHeaders(clientInfo)}).then(response => {
-            if(maxRetries <= 0) { return null }
-
             if(response) {
                 let pinData = response as IPlexCodeResponse;
 
                 if(pinData.authToken) {
                     return pinData.authToken;
                 }else {
+                    if(maxRetries <= 0) { return null }
                     return Util.wait<string | null>(() => this.pollForAuthToken(clientInfo, pinId, requestDelay, maxRetries-=1), requestDelay);
                 }
             }else {

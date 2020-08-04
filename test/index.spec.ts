@@ -5,7 +5,8 @@ describe("Module", () => {
         clientIdentifier: "dhjoasoidjapoiwdmamlw",
         device: "TEST DEVICE",
         product: "TEST DEVICE",
-        version: "1"
+        version: "1",
+        forwardUrl: "https://localhost/"
     });
 
     it("loads and initializes", () => {

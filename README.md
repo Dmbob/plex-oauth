@@ -20,10 +20,11 @@ import { PlexOauth, IPlexClientDetails } from "plex-oauth"
 
 let clientInformation: IPlexClientDetails = {
     clientIdentifier: "<PROVIDE_UNIQUE_VALUE>", // This is a unique identifier used to identify your app with Plex.
-    product: "<NAME_OF_YOUR_APP>", // Name of your application
-    device: "<NAME_OF_YOUR_DEVICE>", // The type of device your application is running on
-    version: "1", // Version of your application
-    platform: "Web" // Optional - Platform your application runs on - Defaults to 'Web'
+    product: "<NAME_OF_YOUR_APP>",              // Name of your application
+    device: "<NAME_OF_YOUR_DEVICE>",            // The type of device your application is running on
+    version: "1",                               // Version of your application
+    forwardUrl: "https://localhost:3000",       // Url to forward back to after signing in.
+    platform: "Web",                            // Optional - Platform your application runs on - Defaults to 'Web'
 }
 
 let plexOauth = new PlexOauth(clientInformation);
@@ -35,16 +36,14 @@ plexOauth.requestHostedLoginURL().then(data => {
     console.log(hostedUILink); // UI URL used to log into Plex
 
     /*
-    * After requesting the hosted UI URL, you use it to open a page in the user's 
-    * browser, so they can sign into Plex. While this is happening, you can start 
-    * polling Plex for the auth token using the function below. This will all depend
-    * on how long it takes the user to put in their information and login, so you may
-    * need to adjust the request delay and request amount to what you think is enough
-    * time.
+    * You can now navigate the user's browser to the 'hostedUILink'. This will include the forward URL
+    * for your application, so when they have finished signing into Plex, they will be redirected back
+    * to the specified URL. From there, you just need to perform a query to check for the auth token.
+    * (See Below)
     */
 
-   // Check for the auth token every 2 seconds up to 10 times
-   plexOauth.checkForAuthToken(pinId, 2000, 10).then(authToken => {
+   // Check for the auth token, once returning to the application
+   plexOauth.checkForAuthToken(pinId).then(authToken => {
        console.log(authToken); // Returns the auth token if set, otherwise returns null
 
        // An auth token will only be null if the user never signs into the hosted UI, or you stop checking for a new one before they can log in
