@@ -18,6 +18,7 @@ export class LinkHelper {
      */
     public static getHeaders(clientInfo: IPlexClientDetails): IPlexPinHeaders {
         return {
+            Origin: clientInfo.origin,
             "X-Plex-Client-Identifier": clientInfo.clientIdentifier,
             "X-Plex-Device": clientInfo.device,
             "X-Plex-Platform": clientInfo.platform || this.PLEX_DEFAULT_PLATFORM,
