@@ -60,6 +60,7 @@ export class RequestHelper {
      */
     public static post(url: string, body: string, headers: OutgoingHttpHeaders): Promise<any> {
         let params: https.RequestOptions = {
+            hostname: url,
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +71,7 @@ export class RequestHelper {
         }
 
         return new Promise((resolve, reject) => {
-            let req = https.request(url, params, (response) => {
+            let req = https.request(params, (response) => {
                 let responseStr = "";
 
                 response.on("data", (data) => {
