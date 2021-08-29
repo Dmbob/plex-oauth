@@ -32,7 +32,6 @@ export interface IPlexCodeResponse {
  * Represents the headers needed when sending requests to the Plex Pins API
  */
 export interface IPlexPinHeaders {
-    "Origin": string,
     "X-Plex-Client-Identifier": string,
     "X-Plex-Device": string,
     "X-Plex-Platform": string,
@@ -44,11 +43,6 @@ export interface IPlexPinHeaders {
  * Represents info about your Plex application
  */
 export interface IPlexClientDetails {
-    /**
-     * CORS Origin header required to be set (i.e. 'http://localhost:3000' or 'https://example.com)
-     */
-    origin: string,
-    
     /**
      * Unique Id that identifies your client
      */

@@ -1,5 +1,4 @@
-import https from "https";
-import { OutgoingHttpHeaders } from "http";
+import axios, { AxiosRequestConfig } from "axios";
 
 /**
  * Class to facilitate the different web requests needed to query the Plex OAuth API
@@ -12,41 +11,15 @@ export class RequestHelper {
      * 
      * @returns {Promise<any>} A promise containing the result of the GET request
      */
-    public static get(url: string, headers: OutgoingHttpHeaders): Promise<any> {
-        let params: https.RequestOptions = {
-            hostname: url,
-            method: "GET",
+    public static get(url: string, headers: AxiosRequestConfig["headers"]): Promise<any> {
+       return axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 ...headers
             }
-        }
-
-        return new Promise((resolve, reject) => {
-            let req = https.request(params, (response) => {
-                let responseStr = "";
-
-                response.on("data", (data) => {
-                    responseStr += data;
-                });
-
-                response.on("end", () => {
-                    let jsonData = JSON.parse(responseStr);
-
-                    if(jsonData) {
-                        resolve(jsonData);
-                    }else {
-                        reject(new Error("Unable to parse response into JSON"));
-                    }
-                });
-            });
-
-            req.on("error", (err) => {
-                reject(err);
-            });
-
-            req.end();
+        }).then(response => {
+            return response.data;
         });
     }
 
@@ -58,42 +31,15 @@ export class RequestHelper {
      * 
      * @returns {Promise<any>} A promise containing the result of the POST request
      */
-    public static post(url: string, body: string, headers: OutgoingHttpHeaders): Promise<any> {
-        let params: https.RequestOptions = {
-            hostname: url,
-            method: "POST",
+    public static post(url: string, body: string, headers: AxiosRequestConfig["headers"]): Promise<any> {
+        return axios.post(url, body, {
             headers: {
                 "Content-Type": "application/json",
-                "Content-Length": body.length,
                 "Accept": "application/json",
                 ...headers
             }
-        }
-
-        return new Promise((resolve, reject) => {
-            let req = https.request(params, (response) => {
-                let responseStr = "";
-
-                response.on("data", (data) => {
-                    responseStr += data;
-                });
-
-                response.on("end", () => {
-                    let jsonData = JSON.parse(responseStr);
-                    if(jsonData) {
-                        resolve(jsonData);
-                    }else {
-                        reject(new Error("Unable to parse response into JSON"));
-                    }
-                });
-            });
-
-            req.on("error", (err) => {
-                reject(err);
-            })
-
-            req.write(body);
-            req.end();
+        }).then(response => {
+            return response.data;
         });
     }
 }
