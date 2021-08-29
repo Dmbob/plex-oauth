@@ -19,7 +19,6 @@ Please look at the following example of how to get the Plex hosted login UI URL 
 import { PlexOauth, IPlexClientDetails } from "plex-oauth"
 
 let clientInformation: IPlexClientDetails = {
-    origin: "https://localhost"                 // Required property used to identify the origin of your application for CORS
     clientIdentifier: "<PROVIDE_UNIQUE_VALUE>", // This is a unique identifier used to identify your app with Plex.
     product: "<NAME_OF_YOUR_APP>",              // Name of your application
     device: "<NAME_OF_YOUR_DEVICE>",            // The type of device your application is running on

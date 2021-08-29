@@ -1,6 +1,6 @@
 {
   "name": "plex-oauth",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Small library to handle simple OAuth with Plex",
   "repository": {
     "url": "https://github.com/Dmbob/plex-oauth"
@@ -28,5 +28,8 @@
   },
   "files": [
     "build/**/*"
-  ]
+  ],
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }

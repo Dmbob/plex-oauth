@@ -2,7 +2,6 @@ import { PlexOauth } from "../src";
 
 describe("Module", () => {
     let plexOauth = new PlexOauth({
-        origin: "https://localhost",
         clientIdentifier: "dhjoasoidjapoiwdmamlw",
         device: "TEST DEVICE",
         product: "TEST DEVICE",
