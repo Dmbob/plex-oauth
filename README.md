@@ -1,4 +1,5 @@
 ![testing](https://github.com/Dmbob/plex-oauth/workflows/testing/badge.svg)
+![codeql](https://github.com/Dmbob/plex-oauth/workflows/CodeQL/badge.svg)
 
 ## Overview
 This library is used to work with Plex OAuth to get an auth token used for making requests to a Plex server's API
