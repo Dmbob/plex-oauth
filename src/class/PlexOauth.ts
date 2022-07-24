@@ -1,6 +1,8 @@
 import { IPlexClientDetails } from "../models/PlexCodeModels";
 import { AuthPin } from "./AuthPin";
 import { LinkHelper } from "../helpers/LinkHelper";
+import { Util } from "../helpers/Util";
+import { Validators } from "../helpers/Validators";
 
 export class PlexOauth {
     private authPin: AuthPin;
@@ -10,6 +12,10 @@ export class PlexOauth {
      * @param {IPlexClientDetails} clientIdentifier Unique identifier for your client (Should be different for every client)
      */
     constructor (private clientInfo: IPlexClientDetails) {
+        for (const validator of Validators.clientDetailsValidators) {
+            validator(clientInfo);
+        }
+
         this.authPin = new AuthPin();
     }
 
