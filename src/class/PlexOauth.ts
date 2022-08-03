@@ -1,7 +1,6 @@
 import { IPlexClientDetails } from "../models/PlexCodeModels";
 import { AuthPin } from "./AuthPin";
 import { LinkHelper } from "../helpers/LinkHelper";
-import { Util } from "../helpers/Util";
 import { Validators } from "../helpers/Validators";
 
 export class PlexOauth {
@@ -26,8 +25,24 @@ export class PlexOauth {
      */
     public requestHostedLoginURL(): Promise<[string, number]> {
         return this.authPin.getPin(this.clientInfo).then(codeResponse => {
+			let link = `${
+				LinkHelper.PLEX_AUTH_BASE_PATH
+			}#?code=${
+				codeResponse.code
+			}&context[device][product]=${
+				this.clientInfo.product
+			}&context[device][device]=${
+				this.clientInfo.device
+			}&clientID=${
+				codeResponse.clientIdentifier
+			}`;
+
+			if (this.clientInfo.forwardUrl) {
+				link += `&forwardUrl=${this.clientInfo.forwardUrl || ""}`;
+			}
+
             return [
-                `${LinkHelper.PLEX_AUTH_BASE_PATH}#?code=${codeResponse.code}&context[device][product]=${this.clientInfo.product}&context[device][device]=${this.clientInfo.device}&clientID=${codeResponse.clientIdentifier}&forwardUrl=${this.clientInfo.forwardUrl}`, 
+                link, 
                 codeResponse.id
             ] as [string, number];
         }).catch(err => {
