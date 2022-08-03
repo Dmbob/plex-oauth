@@ -1,6 +1,7 @@
 import { IPlexClientDetails } from "../models/PlexCodeModels";
 import { AuthPin } from "./AuthPin";
 import { LinkHelper } from "../helpers/LinkHelper";
+import { Validators } from "../helpers/Validators";
 
 export class PlexOauth {
     private authPin: AuthPin;
@@ -10,6 +11,10 @@ export class PlexOauth {
      * @param {IPlexClientDetails} clientIdentifier Unique identifier for your client (Should be different for every client)
      */
     constructor (private clientInfo: IPlexClientDetails) {
+        for (const validator of Validators.clientDetailsValidators) {
+            validator(clientInfo);
+        }
+
         this.authPin = new AuthPin();
     }
 
@@ -20,8 +25,24 @@ export class PlexOauth {
      */
     public requestHostedLoginURL(): Promise<[string, number]> {
         return this.authPin.getPin(this.clientInfo).then(codeResponse => {
+			let link = `${
+				LinkHelper.PLEX_AUTH_BASE_PATH
+			}#?code=${
+				codeResponse.code
+			}&context[device][product]=${
+				this.clientInfo.product
+			}&context[device][device]=${
+				this.clientInfo.device
+			}&clientID=${
+				codeResponse.clientIdentifier
+			}`;
+
+			if (this.clientInfo.forwardUrl) {
+				link += `&forwardUrl=${this.clientInfo.forwardUrl || ""}`;
+			}
+
             return [
-                `${LinkHelper.PLEX_AUTH_BASE_PATH}#?code=${codeResponse.code}&context[device][product]=${this.clientInfo.product}&context[device][device]=${this.clientInfo.device}&clientID=${codeResponse.clientIdentifier}&forwardUrl=${this.clientInfo.forwardUrl}`, 
+                this.clientInfo.urlencode ? encodeURI(link) : link, 
                 codeResponse.id
             ] as [string, number];
         }).catch(err => {

@@ -13,4 +13,15 @@ export class Util {
             }, waitTime)
         });
     }
+
+    /**
+     * Converts input URL string into a 'URL' object and passes it to the specified validator function
+     * @param {string} url The URL to validate
+     * @param {(url: URL) => boolean} validator The validation logic to apply to the URL
+     * @returns {boolean} True if the validation passes or false if it does not
+     */
+    public static validateUrl(url: string, validator: (url: URL) => boolean) {
+        const u = new URL(url);
+        return validator(u);
+    }
 }
