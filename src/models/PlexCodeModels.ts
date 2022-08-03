@@ -72,4 +72,9 @@ export interface IPlexClientDetails {
      * Optional - Defaults to 'Web'
      */
     platform?: string,
+
+    /**
+     * Optional - Whether or not the output url should be url encoded
+     */
+    urlencode?: boolean
 }

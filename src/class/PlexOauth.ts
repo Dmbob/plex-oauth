@@ -42,7 +42,7 @@ export class PlexOauth {
 			}
 
             return [
-                link, 
+                this.clientInfo.urlencode ? encodeURI(link) : link, 
                 codeResponse.id
             ] as [string, number];
         }).catch(err => {

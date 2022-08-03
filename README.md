@@ -24,8 +24,9 @@ let clientInformation: IPlexClientDetails = {
     product: "<NAME_OF_YOUR_APP>",              // Name of your application
     device: "<NAME_OF_YOUR_DEVICE>",            // The type of device your application is running on
     version: "1",                               // Version of your application
-    forwardUrl: "https://localhost:3000",       // Url to forward back to after signing in.
+    forwardUrl: "https://localhost:3000",       // Optional - Url to forward back to after signing in.
     platform: "Web",                            // Optional - Platform your application runs on - Defaults to 'Web'
+    urlencode: true                             // Optional - If set to true, the output URL is url encoded, otherwise if not specified or 'false', the output URL will return as-is
 }
 
 let plexOauth = new PlexOauth(clientInformation);
