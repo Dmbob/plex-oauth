@@ -1,6 +1,8 @@
 import { IPlexClientDetails } from "../models/PlexCodeModels";
 import { AuthPin } from "./AuthPin";
 import { LinkHelper } from "../helpers/LinkHelper";
+import { Util } from "../helpers/Util";
+import { Validators } from "../helpers/Validators";
 
 export class PlexOauth {
   private authPin: AuthPin;
