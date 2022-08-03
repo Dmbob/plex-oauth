@@ -66,7 +66,7 @@ export interface IPlexClientDetails {
     /**
      * Optional - Url to forward back to your application
      */
-    forwardUrl: string
+    forwardUrl?: string
 
     /**
      * Optional - Defaults to 'Web'

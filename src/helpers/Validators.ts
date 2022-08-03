@@ -13,10 +13,10 @@ export namespace Validators {
          * Validate that the forward URL only uses http/https protocols
          */
         (clientInfo) => {
-            if (!Util.validateUrl(clientInfo.forwardUrl, forwardUrl => {
+            if (clientInfo.forwardUrl && (!Util.validateUrl(clientInfo.forwardUrl, forwardUrl => {
                 const regex = new RegExp(/http[s]?/);
                 return regex.test(forwardUrl.protocol);
-            })) {
+            }))) {
                 console.warn("Validation: The forwardUrl must have a protocol of http/https");
             }
         }
