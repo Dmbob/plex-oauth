@@ -1,6 +1,6 @@
 {
   "name": "plex-oauth",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Small library to handle simple OAuth with Plex",
   "repository": {
     "url": "https://github.com/Dmbob/plex-oauth"
@@ -8,7 +8,7 @@
   "main": "build/src/index.js",
   "scripts": {
     "prepublishOnly": "npm run build && npm test",
-    "test": "jasmine-ts --config=jasmine.json",
+    "test": "tsc && jasmine",
     "build": "tsc"
   },
   "keywords": [
@@ -18,18 +18,17 @@
   "author": "Bob Henley",
   "license": "MIT",
   "devDependencies": {
-    "@types/jasmine": "^3.6.10",
-    "@types/node": "^14.14.43",
-    "jasmine": "^3.7.0",
-    "jasmine-spec-reporter": "^5.0.2",
-    "jasmine-ts": "^0.3.3",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.9"
+    "@types/jasmine": "^6.0.0",
+    "@types/node": "^25.9.1",
+    "jasmine": "^6.2.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   },
   "files": [
     "build/**/*"
   ],
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^1.16.1"
   }
 }
